@@ -1,0 +1,23 @@
+# Du skal downloade pytesseract og ocrmypdf
+!pip install pytesseract
+!brew install ocrmypdf # Her skal du også have Homebrew installeret
+
+#Importer følgende:
+import os 
+
+# Sæt nu stien til din pytesseract .exe. ser nok sådan cirka såden ud
+#pytesseract.pytesseract.tesseract_cmd = r'/opt/homebrew/bin/tesseract'
+import ocrmypdf , pytesseract
+def ocr(file_path, save_path):
+    ocrmypdf.ocr(file_path, save_path, rotate_pages=True,language="dan", deskew=True, force_ocr=True)
+# Sæt stien til den folder hvor dine PDF'er ligger
+# Path to the folder containing PDF files
+folder_path = r'/Users/magnusruud/Documents/work_fold/test_RAG/data'
+
+# Looping over directory to OCR all PDF files
+for filename in os.listdir(folder_path):
+    if filename.endswith('.pdf'):
+        file_path = os.path.join(folder_path, filename)
+        save_path = os.path.join(folder_path, f"OCR_{filename}")
+        ocr(file_path, save_path)
+        print(f"OCR completed for {filename}")
